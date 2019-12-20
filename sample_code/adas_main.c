@@ -295,13 +295,6 @@ int main(void)
 			}else
 			{	
 				double accel = accLogic(rxXDist, ego_speed, ObjXVel);
-				int bSpeedControl = (txRelDist - default_spacing)*verr_gain;
-
-				if(bSpeedControl < 0) // spacing control
-				{
-					double accel2 = txRelVel*vx_gain - (v_set - txRelDist)*xerr_gain;
-					accel = (accel < accel2) ? accel : accel2;
-				}
 				txAccel = calEgoSpeed(prevVel, accel, 0.01);
 				prevVel = ego_speed;;
 				//Set gTxData
