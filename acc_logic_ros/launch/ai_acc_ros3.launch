@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+
+   <!-- <include file="$(find hls_lfcd_lds_driver)/launch/hlds_laser.launch"/>-->
+  
+   <!-- Start subsciber -->
+  <!-- <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" /> -->
+  
+  
+  <!-- Start darknet and ros wrapper -->
+   <include file="$(find darknet_ros)/launch/darknet_ros_test.launch"/>
+  
+  <node pkg="acc_logic_ros" type="acc_logic_node2" name="acc_logic_node2" output="screen"/>
+
+</launch>

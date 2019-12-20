@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>acc_logic_ros</name>
+  <version>0.1.0</version>
+  <description>The acc_logic_ros package</description>
+  <maintainer email="kate.brighteyes@gmail.com">kate</maintainer>
+  <license>Apache 2.0</license>
+
+  <url type="repository">https://github.com/katebrighteyes</url> 
+  <url type="website">https://github.com/katebrighteyes/acc_logic_ros</url> 
+  <author email="kate.brighteyes@gmail.com">kate</author> 
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>message_generation</depend>
+  <depend>darknet_ros</depend>
+  <depend>darknet_ros_msgs</depend>
+  <depend>actionlib</depend>
+
+</package>
