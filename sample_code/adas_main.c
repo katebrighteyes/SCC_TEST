@@ -59,13 +59,6 @@ std::thread sendThread1;
 /*-----------------------------------------*/
 /* Automatic Cruise Control (ACC) Controller Parameters */
 /*-----------------------------------------*/
-double v_set = 20;
-double time_gap = 1;
-float default_spacing = 5.0;
-double verr_gain = 0.5;
-double xerr_gain = 0.2;
-double vx_gain = 0.1;
-
 
 typedef struct CanDBData_
 {
