@@ -219,11 +219,11 @@ double accLogic(double dist_rel, double vel_x, double vrel_x)
 	
 	dist_safe = default_spacing + time_gap*vel_x;
 	
-	if(dist_safe >dist_rel) //spacing control
+	if(dist_rel > dist_safe ) //speed_control
 	{
 		acceleration = (v_set - vel_x)* verr_gain;
 	}
-	else //speed_control
+	else //spacing control
 	{
 		double val1 = vrel_x * vx_gain- (dist_safe- dist_rel)*xerr_gain;
 		double val2 = (v_set - vel_x)* verr_gain;
