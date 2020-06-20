@@ -1,0 +1,58 @@
+Jetson Xavier CAN RX/TX 테스트
+
+1)
+sudo apt-get update
+sudo apt-get install busybox
+
+1-1)
+만약 /var…lock.. 에러가 날 경우
+sudo rm -rf /var/lib/dpkg/lock*
+명령어를 실행해주고 다시 install 해주면 된다.
+
+2)
+CAN 컨트롤러 핀에 해당하는 4개의 레지스터 값을 재구성 한다.
+busybox devmem 0x0c303000 32 0x0000C400
+busybox devmem 0x0c303008 32 0x0000C458
+busybox devmem 0x0c303010 32 0x0000C400
+busybox devmem 0x0c303018 32 0x0000C458
+
+3)
+레지스터 값이 수정되었으므로 modprobe명령을 사용하여 CAN컨트롤러과 드라이버를 실행한다.
+sudo modprobe can
+sudo modprobe can_raw
+sudo modprobe mttcan
+
+4)
+CAN버스 및 트랜시버의 사양에 따라 컨트롤러를 구성할 수 있다.
+(여기서는 비트율을 500Kbps, FD활성화, 페이로드 비트율 2Mbps, 오류보고 설정)
+sudo ip link set can0 type can bitrate 500000     dbitrate 2000000 berr-reporting on fd on
+sudo ip link set up can0
+
+CAN컨트롤러가 성공적으로 활성화가 되었다면 다음과 같이 나온다.
+Ifconfig 
+5)
+시스템을 시작할 때 자동으로 CAN컨트롤러 설정이 자동으로 이루어지도록 하려면 다음과 같이 지정된 파일을 만들어 실행 가능하게 만들어주면 됩니다.
+sudo touch /enable_CAN.sh
+sudo chmod 755 /enable_CAN.sh
+
+5-1)enable_CAN.sh
+#!/bin/bash
+
+sudo modprobe can
+sudo modprobe can_raw
+sudo modprobe mttcan
+sudo ip link set can0 type can bitrate 500000 dbitrate 2000000 berr-reporting on fd on
+sudo ip link set can1 type can bitrate 500000 dbitrate 2000000 berr-reporting on fd on
+sudo ip link set up can0
+sudo ip link set up can1
+
+exit 0
+
+Jetson Xavier에 이미 /etc/rc.local 이 있는 경우는 건너뛰고 존재하지 않으면 터미널에서 다음 명령어를 실행하여 계속 만듭니다.
+printf '%s\n' '#!/bin/bash' 'exit 0' | sudo tee -a /etc/rc.loca
+sudo chmod +x /etc/rc.local
+
+다음 줄을 /etc/rc.loacl파일 앞에 추가하세요.
+sh /enable_CAN.sh &
+
+6)
