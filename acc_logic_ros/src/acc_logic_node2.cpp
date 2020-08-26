@@ -40,10 +40,9 @@ void scanCallback(const sensor_msgs::LaserScan::ConstPtr& msg)
 	ROS_INFO("range = %lf :\n",msg->ranges[index]);
 	req_num = REQ_CUR;
 	
-	//if((330<index || index<30) && mRange <= 0.2){
-	if(range <= 0.6){
+	if((detect_target==true) && (range <= 0.6))
+	{
 		req_num = REQ_STOP;
- 		
 		ROS_INFO("range = %lf : Emergency! STOP!\n",msg->ranges[index]);;
 	}
 }
